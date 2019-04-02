@@ -1,49 +1,65 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
-
-import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
-
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-  android:
-    'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
-
-type Props = {};
-export default class App extends Component<Props> {
+import React, { Component } from "react";
+import { View, Text, StyleSheet } from "react-native";
+import { HeaderStyle } from "./HeaderStyle";
+const restaurants = [
+  {
+    name: "React Cafe",
+    address: "123 Anywhere St"
+  },
+  {
+    name: "Fancy Restaurant",
+    address: "799 Main St"
+  },
+  {
+    name: "Taco Place",
+    address: "550 Maple Rd"
+  }
+];
+export default class App extends Component {
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to React Native!</Text>
-        <Text style={styles.instructions}>To get started, edit App.js</Text>
-        <Text style={styles.instructions}>{instructions}</Text>
+      <View>
+        <Text style={HeaderStyle.header}>Restaurant Review</Text>
+        {restaurants.map((restaurant, index) => (
+          <View
+            key={restaurant.name}
+            style={[
+              styles.row,
+              { backgroundColor: index % 2 === 0 ? "transparent" : "#f3f3f7" }
+            ]}
+          >
+            <View style={styles.edges}>
+              <Text>{index + 1}</Text>
+            </View>
+            <View style={styles.nameAndAddress}>
+              <Text>{restaurant.name}</Text>
+              <Text style={styles.quiet}>{restaurant.address}</Text>
+            </View>
+            <View style={styles.edges}>
+              <Text>Info</Text>
+            </View>
+          </View>
+        ))}
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
+  row: {
+    flexDirection: "row"
+  },
+  edges: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 5
   },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
+  nameAndAddress: {
+    flexDirection: "column",
+    flex: 8
   },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
+  quiet: {
+    color: "grey"
+  }
 });
