@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, TextInput, ScrollView } from "react-native";
+import { View, Text, StyleSheet, TextInput, FlatList } from "react-native";
 import { HeaderStyle } from "styles/HeaderStyle";
 import { RestaurantRow } from "./RestaurantRow";
 const restaurants = [
@@ -38,17 +38,13 @@ export default class App extends Component {
           value={this.state.search}
           onChangeText={text => this.setState({ search: text })}
         />
-        <ScrollView>
-          {restaurants
-            .filter(r => r.name.includes(this.state.search))
-            .map((restaurant, index) => (
-              <RestaurantRow
-                key={restaurant.name}
-                restaurant={restaurant}
-                index={index}
-              />
-            ))}
-        </ScrollView>
+        <FlatList
+          data={restaurants.filter(r => r.name.includes(this.state.search))}
+          renderItem={({ item, index }) => (
+            <RestaurantRow restaurant={item} index={index} />
+          )}
+          keyExtractor={item => item.name}
+        />
       </View>
     );
   }
